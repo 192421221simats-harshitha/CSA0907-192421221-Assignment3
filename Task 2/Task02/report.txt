@@ -1,0 +1,61 @@
+# Task 02 – User-Defined Exceptions and Propagation
+
+## Aim
+To implement user-defined exceptions in an online examination portal and demonstrate exception propagation and exception chaining.
+
+## Exception Hierarchy
+
+- ExamException – Base checked exception.
+- SubmissionStorageException – Child exception used when a submission cannot be stored.
+
+## Exception Chaining
+Exception chaining preserves the original exception when another exception is thrown.
+
+In this program, an IOException with the message "Disk quota exceeded" is wrapped inside a SubmissionStorageException. The original exception is preserved as the cause using the constructor.
+
+## Test Cases
+
+| File | Size | Expected Result |
+|---|---:|---|
+| answer01.pdf | 120 KB | Saved successfully |
+| answer02.pdf | 800 KB | Storage exception |
+
+## Observed Output
+
+- Saved answer01.pdf
+- Error: Could not store answer02.pdf
+- Cause: Disk quota exceeded
+
+## Student A – Exception Hierarchy and Propagation Design
+
+ExamException is the parent exception, and SubmissionStorageException is its child class. Both are checked exceptions because they extend Exception.
+
+Propagation path:
+
+Storage → SubmissionStorageException → StorageDemo
+
+The controller/main method catches ExamException and displays the error message.
+
+## Student B – Failure Scenarios and Chaining Evidence
+
+The first file is successfully saved because its size is below 500 KB.
+
+The second file exceeds the storage limit. An IOException is generated and wrapped inside SubmissionStorageException.
+
+Using getCause() allows us to retrieve the original IOException message.
+
+If the original cause is not passed to the constructor, the original reason for the failure is lost.
+
+## Joint Conclusion
+
+Exception chaining helps preserve the original cause of a failure while providing a meaningful message to the higher-level application. SubmissionStorageException makes the storage failure easier to understand and handle without exposing low-level details directly to the user.
+
+## Alternative Concept and Complexity Analysis
+
+If the custom exception extended RuntimeException instead of Exception, it would become unchecked. The methods would not need to declare it using throws, and the calling code would not be forced to catch it.
+
+Creating an exception requires stack-trace information and generally takes time and memory proportional to the stack depth. Exception chaining retains the original exception object, requiring additional memory.
+
+## Result
+
+The program successfully demonstrates custom checked exceptions, propagation and exception chaining.
