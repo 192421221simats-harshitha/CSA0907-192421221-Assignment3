@@ -1,0 +1,43 @@
+# Task 01 – Handling Failure in a Bank ATM Simulation
+
+## Aim
+To simulate ATM withdrawal operations and handle different failures using Java exception handling.
+
+## Failure Classification
+
+| Failure | Exception | Type |
+|---|---|---|
+| Invalid numeric input | InputMismatchException | Unchecked |
+| Negative or zero amount | IllegalArgumentException | Unchecked |
+| Insufficient balance | ArithmeticException | Unchecked |
+| JVM-level failure | Error | Error |
+
+## Student A – Exception Design
+
+The Throwable hierarchy contains Error and Exception. Exception contains checked exceptions and RuntimeException. RuntimeException and its subclasses are unchecked exceptions.
+
+Catch blocks must be ordered carefully so that specific exceptions are handled before broader exceptions. Multi-catch can handle unrelated exception types in one block.
+
+The finally block executes after the try or catch blocks in normal execution and most exception situations. It is useful for cleanup operations.
+
+## Student B – Testing and Tracing
+
+1. Valid withdrawal – ₹1000
+2. Negative withdrawal – -500
+3. Insufficient balance – ₹6000
+4. Invalid input – abc
+5. Zero withdrawal – 0
+
+The finally block is executed after the transaction handling in all these test cases.
+
+## Joint Conclusion
+
+Using specific exception handlers makes the program easier to understand and handle. A single catch(Exception e) is less specific and may hide the type of error. It may be useful at a general error-handling boundary, but specific handlers are better for recovery.
+
+## Alternative Concept
+
+Without exceptions, input can be checked using Scanner.hasNextDouble() and validation conditions. Error codes can be returned instead of throwing exceptions. This may be more efficient for expected invalid inputs, but it requires more explicit checking and can make the code less readable.
+
+## Complexity
+
+The ATM withdrawal operation takes O(1) time and O(1) additional space for a single transaction. Exception stack-trace creation may take additional time and memory depending on the stack depth.
